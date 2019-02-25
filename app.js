@@ -6,18 +6,19 @@ const mongoose = require('mongoose');
 
 const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
+const teamRoutes = require('./routes/teams');
 
 const app = express();
 
 mongoose
 	.connect(
-		'mongodb+srv://thomas:32J8BqPoWuOomv5I@cluster0-cj3kl.mongodb.net/test?retryWrites=true'
+		'mongodb+srv://thomas:32J8BqPoWuOomv5I@cluster0-cj3kl.mongodb.net/test?retryWrites=true', { useNewUrlParser: true }
 	)
 	.then(() => {
 		console.log("Connected to database!");
 	})
 	.catch(() => {
-		console.log("Error");
+		console.log("Error connecting to database");
 	});
 
 app.use(bodyParser.json());
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 
 app.use('/api/posts', postsRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/teams', teamRoutes);
 
 
 module.exports = app;
