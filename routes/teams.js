@@ -94,13 +94,13 @@ router.get('', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
 	Team.findById(req.params.id).then(team => {
 		if (team) {
-            console.log("hit")
 			res.status(200).json(team);
 		} else {
             console.log('error')
 			res.status(404).json({message: 'Team not found!'});
 		}
-	});
+    });
+    
 });
 
 //// UPDATE
@@ -116,11 +116,11 @@ router.put(
 		}
 		const team = new Team({
 			_id: req.body.id,
-			title: req.body.title,
+			name: req.body.name,
 			imagePath: imagePath,
 			creator: req.userData.userId
 		});
-		Team.updateOne({ _id: req.params.id, creator: req.userData.userId }, team).then(() => {
+		Team.updateOne({ _id: req.params.id, creator: req.userData.userId }, team).then((result) => {
 			if (result.nModified > 0){
 				res.status(200).json({message: 'Update successful!'});	
 			} else {
